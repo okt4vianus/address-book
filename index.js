@@ -51,7 +51,7 @@ ${contact.id3.phoneNumber}
 ${contact.id3.dob}`);
 
 isConfirm = confirm(
-  `Are you sure you want to permanently remove this contact no. ${contact.id3.fullName}?`
+  `Are you sure you want to permanently remove contact  ${contact.id3.fullName}?`
 );
 if (isConfirm == true) {
   console.log(`Contact ${contact.id3.fullName} deleted.`);
