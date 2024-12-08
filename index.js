@@ -49,5 +49,6 @@ Company   : ${contacts[i].company}
 Email     : ${contacts[i].email}
 Phone     : ${contacts[i].phone}
 DOB       : ${contacts[i].dob}
+
 `);
 }
