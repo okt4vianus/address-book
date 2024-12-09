@@ -17,7 +17,7 @@ const contacts = [
   },
   {
     id: 3,
-    fullName: undefined,
+    fullName: "Agus Dewantoro",
     company: null,
     email: null,
     phone: "+62 ",
@@ -41,6 +41,10 @@ const contacts = [
   },
 ];
 
+module.exports = contacts; // Export the contacts array
+
+//Declare all function
+
 // Function cek id in contacts
 function cekId(object, id) {
   if (id <= object.length) {
@@ -61,7 +65,7 @@ function addContact(object, data) {
   Company       : ${object[index].company}
   Email         : ${object[index].email}
   Phone Number  : ${object[index].phone}
-  Date of Birth : ${object[index].dob} 
+  Date of Birth : ${object[index].dob}
   `);
 }
 
@@ -78,7 +82,7 @@ function findContactById(object, index) {
   mail          : ${object[index].email}
   Company       : ${object[index].company}
   Phone Number  : ${object[index].phone}
-  Date of Birth : ${object[index].dob} 
+  Date of Birth : ${object[index].dob}
   `);
   } else console.log("ID is invalid");
 }
@@ -90,13 +94,13 @@ function removeContactById(object, index) {
     console.log(`
   Contact removed successfully, details of the removed contact:
   _____________________________________________________________
-  
+
   ID            : ${object[index].id}
   Full Name     : ${object[index].fullName}
   Company       : ${object[index].company}
   Email         : ${object[index].email}
   Phone Number  : ${object[index].phone}
-  Date of Birth : ${object[index].dob} 
+  Date of Birth : ${object[index].dob}
   `);
     object.splice(index, 1);
   } else console.log("Contact not found");
@@ -105,32 +109,38 @@ function removeContactById(object, index) {
 // Function to display all data in contacts
 function displayContacts(object) {
   console.log(`
-  Display all contacts details:
-  _____________________________`);
+DISPLAY ALL CONTACTS:
+
+  ID | Full Name ${" ".repeat(10)} | Company ${" ".repeat(
+    20
+  )}| Email ${" ".repeat(30)} | Phone Number ${" ".repeat(5)} | Date of Birth
+  ________________________${"_".repeat(107)}`);
   for (let i = 0; i < object.length; i++) {
+    let lenname = object[i].fullName ? 19 - object[i].fullName.length : 15;
+    let lencompany = object[i].company ? 26 - object[i].company.length : 22;
+    let lenemail = object[i].email ? 35 - object[i].email.length : 31;
+    let lenphone = object[i].phone ? 17 - object[i].phone.length : 12;
     console.log(`
-  ID            : ${object[i].id}
-  Full Name     : ${object[i].fullName}
-  Company       : ${object[i].company}
-  mail          : ${object[i].email}
-  Phone Number  : ${object[i].phone}
-  Date of Birth : ${object[i].dob}  
-    `);
+  ${object[i].id}  | ${object[i].fullName} ${" ".repeat(lenname)} | ${
+      object[i].company
+    } ${" ".repeat(lencompany)} | ${object[i].email} ${" ".repeat(
+      lenemail
+    )} | ${object[i].phone} ${" ".repeat(lenphone)} | ${object[i].dob}`);
   }
 }
 
 // Main program
-addContact(contacts, {
-  id: 6,
-  fullName: "Frank Taylor",
-  company: "Logistics Hub",
-  email: "frank.taylor@logisticshub.com",
-  phone: "+62 678-901-2345",
-  dob: "1988-11-11",
-});
+// addContact(contacts, {
+//   id: 6,
+//   fullName: "Frank Taylor",
+//   company: "Logistics Hub",
+//   email: "frank.taylor@logisticshub.com",
+//   phone: "+62 678-901-2345",
+//   dob: "1988-11-11",
+// });
 
-findContactById(contacts, 3);
+// findContactById(contacts, 3);
 
-removeContactById(contacts, 3);
+// removeContactById(contacts, 3);
 
-displayContacts(contacts);
+// displayContacts(contacts);
