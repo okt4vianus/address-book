@@ -2,7 +2,7 @@ const contacts = require("./index"); // Import contacts from index.js
 
 function displayContacts(object) {
   console.log(`
-  DISPLAY ALL CONTACTS:
+    DISPLAY ALL CONTACTS:
   
     ID | Full Name ${" ".repeat(10)} | Company ${" ".repeat(
     20
