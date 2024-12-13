@@ -43,13 +43,6 @@ const dataContacts = [
 
 // Declare all function
 
-// Function check id in data contacts
-function checkId(contacts, id) {
-  if (contacts.find((contact) => contact.id === id)) {
-    return contacts.find((contact) => contact.id === id);
-  } else console.log(`Contact with ID ${id} not found.`);
-}
-
 // Function to generate a unique ID
 function generateId(params) {
   return Math.floor(Math.random() * 9000 + 1000);
@@ -59,11 +52,12 @@ function generateId(params) {
 function addContact(contacts, newContact) {
   const newContactWithId = {
     id: generateId(),
-    fullName: newContact.fullName,
-    company: newContact.company,
-    email: newContact.email,
-    phone: newContact.phone,
-    birthdate: newContact.birthdate,
+    ...newContact,
+    // fullName: newContact.fullName,
+    // company: newContact.company,
+    // email: newContact.email,
+    // phone: newContact.phone,
+    // birthdate: newContact.birthdate,
   };
   contacts.push(newContactWithId);
   const lastContactIndex = contacts.length - 1;
@@ -99,13 +93,33 @@ function findContactById(contacts, id) {
   } else console.log(`  Find contact of ID ${id} not found.`);
 }
 
+// Function to remove contact first input
+function removeFirstContact(contacts) {
+  if (contacts.length > 0) {
+    console.log(` 
+  Contact removed shift successfully, details of the removed contact:
+  ___________________________________________________________________
+    
+  ID        : ${contacts[0].id}
+  Full Name : ${contacts[0].fullName}
+  Company   : ${contacts[0].company}
+  Email     : ${contacts[0].email}
+  Phone     : ${contacts[0].phone}
+  Birthdate : ${contacts[0].birthdate}
+  `);
+    contacts.shift();
+  } else {
+    console.log(`  No contact to remove shift due array is empty`);
+  }
+}
+
 // Function to remove contact last input
 function removeLastContact(contacts) {
   if (contacts.length > 0) {
     const lastContactIndex = contacts.length - 1;
     console.log(`
-  Contact removed successfully, details of the removed contact:
-  _____________________________________________________________
+  Contact removed pop successfully, details of the removed contact:
+  _________________________________________________________________
 
   ID        : ${contacts[lastContactIndex].id}
   Full Name : ${contacts[lastContactIndex].fullName}
@@ -116,7 +130,7 @@ function removeLastContact(contacts) {
   `);
     contacts.pop();
   } else {
-    console.log(`  No contact to remove due array is empty`);
+    console.log(`  No contact to remove pop due array is empty`);
   }
 }
 
@@ -177,6 +191,8 @@ function displayContacts(contacts) {
 }
 
 // Main program
+displayContacts(dataContacts);
+
 addContact(dataContacts, {
   fullName: "Frank Taylor",
   company: "Logistics Hub",
@@ -187,11 +203,13 @@ addContact(dataContacts, {
 
 findContactById(dataContacts, 2491);
 
+removeFirstContact(dataContacts);
 removeLastContact(dataContacts);
+removeFirstContact(dataContacts);
 removeLastContact(dataContacts);
+removeFirstContact(dataContacts);
 removeLastContact(dataContacts);
-removeLastContact(dataContacts);
-removeLastContact(dataContacts);
+removeFirstContact(dataContacts);
 removeLastContact(dataContacts);
 
 displayContacts(dataContacts);
