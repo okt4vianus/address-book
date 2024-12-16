@@ -1,22 +1,22 @@
-const dataContacts = [
+let dataContacts = [
   {
-    id: 4821,
+    id: 1,
     fullName: "Alice Johnson",
     company: "Tech Solutions Inc.",
     email: "alice.johnson@techsolutions.com",
     phone: "+62 123-456-7890",
-    birthdate: "1985-03-15",
+    birthdate: new Date("1985-03-15"),
   },
   {
-    id: 1954,
+    id: 2,
     fullName: "Bob Smith",
     company: "Creative Designs Ltd.",
     email: "bob.smith@creativedesigns.com",
     phone: "+62 234-567-8901",
-    birthdate: "1990-07-22",
+    birthdate: new Date("1990-07-22"),
   },
   {
-    id: 8346,
+    id: 3,
     fullName: "Agus Dewantoro",
     company: null,
     email: null,
@@ -24,192 +24,144 @@ const dataContacts = [
     birthdate: null,
   },
   {
-    id: 6732,
+    id: 4,
     fullName: "Diana Williams",
     company: "Marketing Experts",
     email: "diana.williams@marketingexperts.com",
     phone: "+62 456-789-0123",
-    birthdate: "1992-05-04",
+    birthdate: new Date("1992-05-04"),
   },
   {
-    id: 2491,
+    id: 5,
     fullName: "Eve Davis",
     company: "Finance Solutions Group",
     email: "eve.davis@financesolutions.com",
     phone: "+62 567-890-1234",
-    birthdate: "1987-02-18",
+    birthdate: new Date("1987-02-18"),
   },
 ];
 
-// Declare all function
-
-// Function to generate a unique ID
-function generateId(params) {
-  return Math.floor(Math.random() * 9000 + 1000);
-}
-
-// Function add data in data contacts
-function addContact(contacts, newContact) {
-  const newContactWithId = {
-    id: generateId(),
-    ...newContact,
-    // fullName: newContact.fullName,
-    // company: newContact.company,
-    // email: newContact.email,
-    // phone: newContact.phone,
-    // birthdate: newContact.birthdate,
-  };
-  contacts.push(newContactWithId);
-  const lastContactIndex = contacts.length - 1;
+// Function Render Contacts
+function renderContacts(contacts) {
   console.log(`
-  Add contact successfully, details of the contact:
-  _________________________________________________
-
-  ID        : ${contacts[lastContactIndex].id}
-  Full Name : ${contacts[lastContactIndex].fullName}
-  Company   : ${contacts[lastContactIndex].company}
-  Email     : ${contacts[lastContactIndex].email}
-  Phone     : ${contacts[lastContactIndex].phone}
-  Birthdate : ${contacts[lastContactIndex].birthdate}
-  `);
-}
-
-// Function find data by id in contacts
-function findContactById(contacts, id) {
-  const contact = contacts.find((contact) => contact.id === id);
-
-  if (contact) {
-    console.log(`
-  Find contact of ID: ${contact.id} successfully, details of the contact:
-  ___________________________________________________________
-
-  ID        : ${contact.id}
-  Full Name : ${contact.fullName}
-  mail      : ${contact.email}
-  Company   : ${contact.company}
-  Phone     : ${contact.phone}
-  Birthdate : ${contact.birthdate}
-  `);
-  } else console.log(`  Find contact of ID ${id} not found.`);
-}
-
-// Function to remove contact first input
-function removeFirstContact(contacts) {
-  if (contacts.length > 0) {
-    console.log(` 
-  Contact removed shift successfully, details of the removed contact:
-  ___________________________________________________________________
-    
-  ID        : ${contacts[0].id}
-  Full Name : ${contacts[0].fullName}
-  Company   : ${contacts[0].company}
-  Email     : ${contacts[0].email}
-  Phone     : ${contacts[0].phone}
-  Birthdate : ${contacts[0].birthdate}
-  `);
-    contacts.shift();
-  } else {
-    console.log(`  No contact to remove shift due array is empty`);
-  }
-}
-
-// Function to remove contact last input
-function removeLastContact(contacts) {
-  if (contacts.length > 0) {
-    const lastContactIndex = contacts.length - 1;
-    console.log(`
-  Contact removed pop successfully, details of the removed contact:
-  _________________________________________________________________
-
-  ID        : ${contacts[lastContactIndex].id}
-  Full Name : ${contacts[lastContactIndex].fullName}
-  Company   : ${contacts[lastContactIndex].company}
-  Email     : ${contacts[lastContactIndex].email}
-  Phone     : ${contacts[lastContactIndex].phone}
-  Birthdate : ${contacts[lastContactIndex].birthdate}
-  `);
-    contacts.pop();
-  } else {
-    console.log(`  No contact to remove pop due array is empty`);
-  }
-}
-
-// Function to display all data in contacts
-function displayContacts(contacts) {
-  // Display as column`)
-  if (contacts.length > 0) {
-    console.log(`
   DISPLAY ALL CONTACTS - ${contacts.length} records
   _________________________________________________`);
-
-    for (let index = 0; index < contacts.length; index++) {
-      console.log(`  ID        : ${contacts[index].id}
-  Full Name : ${contacts[index].fullName}
-  Company   : ${contacts[index].company}
-  Email     : ${contacts[index].email}
-  Phone     : ${contacts[index].phone}
-  Birthdate : ${contacts[index].birthdate}
+  contacts.forEach((contact) => {
+    const date = contact.birthdate
+      ? contact.birthdate.toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+      : null;
+    console.log(`  ID        : ${contact.id}
+  Full Name : ${contact.fullName}
+  Company   : ${contact.company}
+  Email     : ${contact.email}
+  Phone     : ${contact.phone}
+  Birthdate : ${date}
   `);
-    }
-  } else {
-    console.log(`
-  DISPLAY ALL CONTACTS - ${contacts.length} records
-  _________________________________________________
-  No record found
-    `);
+  });
+}
+
+// Function Search Contact
+function searchContact(contacts, searchTerm) {
+  const searchedContact = contacts.filter((contact) => {
+    return (
+      (contact.fullName &&
+        contact.fullName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (contact.company &&
+        contact.company.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  });
+
+  if (searchedContact.length <= 0) {
+    console.log("No contact(s) found");
+    return;
   }
 
-  // Display as row
-  //   console.log(`
-  //   DISPLAY ALL CONTACTS:
-  //   ID | Full Name ${" ".repeat(10)} | Company ${" ".repeat(
-  //     20
-  //   )}| Email ${" ".repeat(30)} | Phone ${" ".repeat(12)} | Birthdate
-  //   ________________________${"_".repeat(107)}`);
-  //   for (let index = 0; index < contacts.length; index++) {
-  //     let spacingName = contacts[index].fullName
-  //       ? 19 - contacts[index].fullName.length
-  //       : 15;
-  //     let spacingCompany = contacts[index].company
-  //       ? 26 - contacts[index].company.length
-  //       : 22;
-  //     let spacingEmail = contacts[index].email
-  //       ? 35 - contacts[index].email.length
-  //       : 31;
-  //     let spacingPhone = contacts[index].phone
-  //       ? 17 - contacts[index].phone.length
-  //       : 12;
-  //     console.log(`
-  //   ${contacts[index].id}  | ${contacts[index].fullName} ${" ".repeat(
-  //       spacingName
-  //     )} | ${contacts[index].company} ${" ".repeat(spacingCompany)} | ${
-  //       contacts[index].email
-  //     } ${" ".repeat(spacingEmail)} | ${contacts[index].phone} ${" ".repeat(
-  //       spacingPhone
-  //     )} | ${contacts[index].birthdate}`);
-  //   }
+  renderContacts(searchedContact);
+}
+
+// Function Generate ID
+function generateId(contacts) {
+  return contacts[contacts.length - 1].id + 1;
+}
+
+// Function Add Contact
+function addContact(contacts, newContactInput) {
+  // const newContact = [...contacts, newContactInput];
+  const newContact = {
+    id: generateId(contacts),
+    fullName: newContactInput.fullName,
+    company: newContactInput.company,
+    email: newContactInput.email,
+    phone: newContactInput.phone,
+    birthdate: new Date(newContactInput.birthdate),
+  };
+
+  const newContacts = [...contacts, newContact];
+  dataContacts = newContacts;
+  renderContacts(dataContacts);
+}
+
+// Function Delete Contact
+function deleteContact(contacts, contactId) {
+  const delContact = contacts.filter((contact) => {
+    return contact.id === contactId;
+  });
+  const filterContacts = contacts.filter((contact) => {
+    return contact.id != contactId;
+  });
+
+  dataContacts = filterContacts;
+  renderContacts(delContact);
+}
+
+// Function Edit Contact
+function updateContact(contacts, contactId, updateContactInput) {
+  const originalContact = contacts.find((contact) => {
+    return contact.id === contactId;
+  });
+
+  const updateContact = {
+    id: contactId,
+    fullName: updateContactInput.fullName || originalContact.fullName,
+    company: updateContactInput.company || originalContact.company,
+    email: updateContactInput.email || originalContact.email,
+    phone: updateContactInput.phone || originalContact.phone,
+    birthdate: new Date(
+      updateContactInput.birthdate || originalContact.birthdate
+    ),
+  };
+
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === contactId) {
+      return updateContact;
+    }
+    return contact;
+  });
+
+  dataContacts = updatedContacts;
+  renderContacts(dataContacts);
 }
 
 // Main program
-displayContacts(dataContacts);
+// renderContacts(dataContacts);
 
-addContact(dataContacts, {
-  fullName: "Frank Taylor",
-  company: "Logistics Hub",
-  email: "frank.taylor@logisticshub.com",
-  phone: "+62 678-901-2345",
-  birthdate: "1988-11-11",
-});
+// searchContact(dataContacts, "ltd");
 
-findContactById(dataContacts, 2491);
+// addContact(dataContacts, {
+//   fullName: "Frank Taylor",
+//   company: "Logistics Hub",
+//   email: "frank.taylor@logisticshub.com",
+//   phone: "+62 678-901-2345",
+//   birthdate: "1988-11-11",
+// });
 
-removeFirstContact(dataContacts);
-removeLastContact(dataContacts);
-removeFirstContact(dataContacts);
-removeLastContact(dataContacts);
-removeFirstContact(dataContacts);
-removeLastContact(dataContacts);
-removeFirstContact(dataContacts);
-removeLastContact(dataContacts);
+// deleteContact(dataContacts, 4);
 
-displayContacts(dataContacts);
+// updateContact(dataContacts, 5, {
+//   phone: "+62 987-654-3210",
+//   company: "Bank Indonesia",
+// });
