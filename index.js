@@ -90,7 +90,6 @@ function generateId(contacts) {
 
 // Function Add Contact
 function addContact(contacts, newContactInput) {
-  // const newContact = [...contacts, newContactInput];
   const newContact = {
     id: generateId(contacts),
     fullName: newContactInput.fullName,
@@ -102,6 +101,7 @@ function addContact(contacts, newContactInput) {
 
   const newContacts = [...contacts, newContact];
   dataContacts = newContacts;
+  saveToLocalStorage("storageDataContacts", dataContacts);
   renderContacts(dataContacts);
 }
 
@@ -110,15 +110,22 @@ function deleteContact(contacts, contactId) {
   const delContact = contacts.filter((contact) => {
     return contact.id === contactId;
   });
+
   const filterContacts = contacts.filter((contact) => {
     return contact.id != contactId;
   });
 
+  if (delContact.length <= 0) {
+    console.log(`There is no contact with the ID ${contactId} to delete`);
+    return;
+  }
+
   dataContacts = filterContacts;
-  renderContacts(delContact);
+  saveToLocalStorage("storageDataContacts", dataContacts);
+  renderContacts(dataContacts);
 }
 
-// Function Edit Contact
+// Function Update Contact
 function updateContact(contacts, contactId, updateContactInput) {
   const originalContact = contacts.find((contact) => {
     return contact.id === contactId;
@@ -143,10 +150,27 @@ function updateContact(contacts, contactId, updateContactInput) {
   });
 
   dataContacts = updatedContacts;
+  saveToLocalStorage("storageDataContacts", dataContacts);
   renderContacts(dataContacts);
 }
 
+// Function to Save to localStorage
+function saveToLocalStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Function to Load from localStorage
+function loadFromLocalStorage(key) {
+  const storageDataContacts = JSON.parse(localStorage.getItem(key));
+  return storageDataContacts;
+}
+
 // Main program
+const tempLocalStorage = loadFromLocalStorage("storageDataContacts");
+if (tempLocalStorage <= 0) {
+  saveToLocalStorage("storageDataContacts", dataContacts);
+}
+
 // renderContacts(dataContacts);
 
 // searchContact(dataContacts, "ltd");
