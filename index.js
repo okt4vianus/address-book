@@ -46,7 +46,6 @@ if (tempLocalStorage <= 0) {
   saveToLocalStorage("storageDataContacts", dataContacts);
 }
 
-// Function Render Contacts
 function renderContacts(contacts) {
   console.log(`
   DISPLAY ALL CONTACTS - ${contacts.length} records
@@ -69,7 +68,6 @@ function renderContacts(contacts) {
   });
 }
 
-// Function Search Contact
 function searchContact(contacts, searchTerm) {
   const searchedContact = contacts.filter((contact) => {
     return (
@@ -88,12 +86,10 @@ function searchContact(contacts, searchTerm) {
   renderContacts(searchedContact);
 }
 
-// Function Generate ID
 function generateId(contacts) {
   return contacts[contacts.length - 1].id + 1;
 }
 
-// Function Add Contact
 function addContact(contacts, newContactInput) {
   const newContact = {
     id: generateId(contacts),
@@ -110,7 +106,6 @@ function addContact(contacts, newContactInput) {
   renderContacts(dataContacts);
 }
 
-// Function Delete Contact
 function deleteContact(contacts, contactId) {
   const delContact = contacts.filter((contact) => {
     return contact.id === contactId;
@@ -130,7 +125,6 @@ function deleteContact(contacts, contactId) {
   renderContacts(dataContacts);
 }
 
-// Function Update Contact
 function updateContact(contacts, contactId, updateContactInput) {
   const originalContact = contacts.find((contact) => {
     return contact.id === contactId;
@@ -159,12 +153,10 @@ function updateContact(contacts, contactId, updateContactInput) {
   renderContacts(dataContacts);
 }
 
-// Function to Save to localStorage
 function saveToLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Function to Load from localStorage
 function loadFromLocalStorage(key) {
   const storageDataContacts = JSON.parse(localStorage.getItem(key));
   return storageDataContacts;
