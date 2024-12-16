@@ -41,6 +41,11 @@ let dataContacts = [
   },
 ];
 
+const tempLocalStorage = loadFromLocalStorage("storageDataContacts");
+if (tempLocalStorage <= 0) {
+  saveToLocalStorage("storageDataContacts", dataContacts);
+}
+
 // Function Render Contacts
 function renderContacts(contacts) {
   console.log(`
@@ -166,10 +171,6 @@ function loadFromLocalStorage(key) {
 }
 
 // Main program
-const tempLocalStorage = loadFromLocalStorage("storageDataContacts");
-if (tempLocalStorage <= 0) {
-  saveToLocalStorage("storageDataContacts", dataContacts);
-}
 
 // renderContacts(dataContacts);
 
