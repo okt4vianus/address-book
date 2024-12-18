@@ -41,11 +41,6 @@ let dataContacts = [
   },
 ];
 
-const tempLocalStorage = loadFromLocalStorage("storageDataContacts");
-if (tempLocalStorage <= 0) {
-  saveToLocalStorage("storageDataContacts", dataContacts);
-}
-
 function renderContacts(contacts) {
   console.log(`
   DISPLAY ALL CONTACTS - ${contacts.length} records
@@ -68,8 +63,8 @@ function renderContacts(contacts) {
   });
 }
 
-function searchContact(contacts, searchTerm) {
-  const searchedContact = contacts.filter((contact) => {
+function searchContacts(contacts, searchTerm) {
+  const searchedContacts = contacts.filter((contact) => {
     return (
       (contact.fullName &&
         contact.fullName.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -78,12 +73,12 @@ function searchContact(contacts, searchTerm) {
     );
   });
 
-  if (searchedContact.length <= 0) {
+  if (searchedContacts.length <= 0) {
     console.log("No contact(s) found");
     return;
   }
 
-  renderContacts(searchedContact);
+  renderContacts(searchedContacts);
 }
 
 function generateId(contacts) {
@@ -102,12 +97,12 @@ function addContact(contacts, newContactInput) {
 
   const newContacts = [...contacts, newContact];
   dataContacts = newContacts;
-  saveToLocalStorage("storageDataContacts", dataContacts);
+  saveContacts(dataContacts);
   renderContacts(dataContacts);
 }
 
 function deleteContact(contacts, contactId) {
-  const delContact = contacts.filter((contact) => {
+  const filteredContacts = contacts.filter((contact) => {
     return contact.id === contactId;
   });
 
@@ -115,20 +110,23 @@ function deleteContact(contacts, contactId) {
     return contact.id != contactId;
   });
 
-  if (delContact.length <= 0) {
+  if (filteredContacts.length <= 0) {
     console.log(`There is no contact with the ID ${contactId} to delete`);
     return;
   }
 
   dataContacts = filterContacts;
-  saveToLocalStorage("storageDataContacts", dataContacts);
+  saveContacts(dataContacts);
   renderContacts(dataContacts);
 }
 
 function updateContact(contacts, contactId, updateContactInput) {
-  const originalContact = contacts.find((contact) => {
-    return contact.id === contactId;
-  });
+  const originalContact = contacts.find((contact) => contact.id === contactId);
+
+  if (!originalContact) {
+    console.log(`Contact with ID ${contactId} not found.`);
+    return;
+  }
 
   const updateContact = {
     id: contactId,
@@ -149,26 +147,41 @@ function updateContact(contacts, contactId, updateContactInput) {
   });
 
   dataContacts = updatedContacts;
-  saveToLocalStorage("storageDataContacts", dataContacts);
+  saveContacts(dataContacts);
   renderContacts(dataContacts);
 }
 
-function saveToLocalStorage(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+function saveContacts(data) {
+  localStorage.setItem("storageDataContacts", JSON.stringify(data));
 }
 
-function loadFromLocalStorage(key) {
-  const storageDataContacts = JSON.parse(localStorage.getItem(key));
-  return storageDataContacts;
+function loadContacts() {
+  const storageDataContacts = JSON.parse(
+    localStorage.getItem("storageDataContacts")
+  );
+
+  if (!storageDataContacts) {
+    saveContacts(dataContacts);
+    return dataContacts;
+  }
+
+  // Convert 'birthdate' strings back into Date objects
+  const parsedContacts = storageDataContacts.map((contact) => ({
+    ...contact,
+    birthdate: contact.birthdate ? new Date(contact.birthdate) : null,
+  }));
+
+  return parsedContacts;
+  // return storageDataContacts;
 }
 
 // Main program
 
-// renderContacts(dataContacts);
+// renderContacts(loadContacts());
 
-// searchContact(dataContacts, "ltd");
+// searchContacts(loadContacts(), "ltd");
 
-// addContact(dataContacts, {
+// addContact(loadContacts(), {
 //   fullName: "Frank Taylor",
 //   company: "Logistics Hub",
 //   email: "frank.taylor@logisticshub.com",
@@ -176,9 +189,9 @@ function loadFromLocalStorage(key) {
 //   birthdate: "1988-11-11",
 // });
 
-// deleteContact(dataContacts, 4);
+// deleteContact(loadContacts(), 4);
 
-// updateContact(dataContacts, 5, {
-//   phone: "+62 987-654-3210",
-//   company: "Bank Indonesia",
-// });
+updateContact(loadContacts(), 5, {
+  phone: "+62 987-654-3210",
+  company: "Bank Indonesia",
+});
