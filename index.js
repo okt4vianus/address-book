@@ -42,51 +42,31 @@ let dataContacts = [
 ];
 
 function renderContacts(contacts) {
-  // Output to HTML
-  const contactsList = document.getElementById("contacts-list");
-  contactsList.innerHTML = `
-    <h2>DISPLAY ALL CONTACTS - ${contacts.length} records</h2>
-    <hr>
-  `;
-  contacts.forEach((contact) => {
-    const date = contact.birthdate
-      ? contact.birthdate.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        })
-      : null;
-    contactsList.innerHTML += `
-      <p>ID        : ${contact.id}  </p>
-      <p>Full Name : ${contact.fullName}  </p>
-      <p>Company   : ${contact.company}  </p>
-      <p>Email     : ${contact.email}  </p>
-      <p>Phone     : ${contact.phone}  </p>
-      <p>Birthdate : ${date}  </p>
-      <hr>
-        `;
-  });
+  const contactsListElement = document.getElementById("contacts-list");
 
-  // // Output to Console Log
-  // console.log(`
-  // DISPLAY ALL CONTACTS - ${contacts.length} records
-  // _________________________________________________`);
-  // contacts.forEach((contact) => {
-  //   const date = contact.birthdate
-  //     ? contact.birthdate.toLocaleDateString("en-GB", {
-  //         day: "numeric",
-  //         month: "long",
-  //         year: "numeric",
-  //       })
-  //     : null;
-  //   console.log(`  ID        : ${contact.id}
-  // Full Name : ${contact.fullName}
-  // Company   : ${contact.company}
-  // Email     : ${contact.email}
-  // Phone     : ${contact.phone}
-  // Birthdate : ${date}
-  // `);
-  // });
+  const contactsListHtmlString = contacts
+    .map((contact) => {
+      const date = formatDateTime(contact.birthdate);
+
+      return `
+      <li class="pt-4">
+        <p>ID       : ${contact.id}</p>
+        <p>Full Name: ${contact.fullName}</p>
+        <p>Company  : ${contact.company}</p>
+        <p>Email    : ${contact.email}</p>
+        <p>Phone    : ${contact.phone}</p>
+        <p>Birthdate: ${date}</p>
+        <div>
+          <button class="border rounded bg-red-500 text-xs text-white px-1 py-0.5">Delete</button>
+        </div>
+      </li>
+      `;
+    })
+    .join("");
+
+  console.log({ contactsListHtmlString });
+
+  contactsListElement.innerHTML = contactsListHtmlString;
 }
 
 function searchContacts(contacts, searchTerm) {
@@ -201,9 +181,21 @@ function loadContacts() {
   // return storageDataContacts;
 }
 
-// Main program
+function formatDateTime(date) {
+  if (!date) return null;
 
-// renderContacts(loadContacts());
+  return new Date(date).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+/**
+ * Run Address Book functions
+ */
+
+renderContacts(loadContacts());
 
 // searchContacts(loadContacts(), "ltd");
 
