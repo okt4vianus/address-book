@@ -42,9 +42,12 @@ let dataContacts = [
 ];
 
 function renderContacts(contacts) {
-  console.log(`
-  DISPLAY ALL CONTACTS - ${contacts.length} records
-  _________________________________________________`);
+  // Output to HTML
+  const contactsList = document.getElementById("contacts-list");
+  contactsList.innerHTML = `
+    <h2>DISPLAY ALL CONTACTS - ${contacts.length} records</h2>
+    <hr>
+  `;
   contacts.forEach((contact) => {
     const date = contact.birthdate
       ? contact.birthdate.toLocaleDateString("en-GB", {
@@ -53,14 +56,37 @@ function renderContacts(contacts) {
           year: "numeric",
         })
       : null;
-    console.log(`  ID        : ${contact.id}
-  Full Name : ${contact.fullName}
-  Company   : ${contact.company}
-  Email     : ${contact.email}
-  Phone     : ${contact.phone}
-  Birthdate : ${date}
-  `);
+    contactsList.innerHTML += `
+      <p>ID        : ${contact.id}  </p>
+      <p>Full Name : ${contact.fullName}  </p>
+      <p>Company   : ${contact.company}  </p>
+      <p>Email     : ${contact.email}  </p>
+      <p>Phone     : ${contact.phone}  </p>
+      <p>Birthdate : ${date}  </p>
+      <hr>
+        `;
   });
+
+  // // Output to Console Log
+  // console.log(`
+  // DISPLAY ALL CONTACTS - ${contacts.length} records
+  // _________________________________________________`);
+  // contacts.forEach((contact) => {
+  //   const date = contact.birthdate
+  //     ? contact.birthdate.toLocaleDateString("en-GB", {
+  //         day: "numeric",
+  //         month: "long",
+  //         year: "numeric",
+  //       })
+  //     : null;
+  //   console.log(`  ID        : ${contact.id}
+  // Full Name : ${contact.fullName}
+  // Company   : ${contact.company}
+  // Email     : ${contact.email}
+  // Phone     : ${contact.phone}
+  // Birthdate : ${date}
+  // `);
+  // });
 }
 
 function searchContacts(contacts, searchTerm) {
@@ -191,7 +217,7 @@ function loadContacts() {
 
 // deleteContact(loadContacts(), 4);
 
-updateContact(loadContacts(), 5, {
-  phone: "+62 987-654-3210",
-  company: "Bank Indonesia",
-});
+// updateContact(loadContacts(), 5, {
+//   phone: "+62 987-654-3210",
+//   company: "Bank Indonesia",
+// });
