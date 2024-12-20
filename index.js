@@ -50,11 +50,11 @@ function renderContacts(contacts) {
 
       return `
       <li class="pt-4">
-        <p>ID       : ${contact.id}</p>
+        <p>ID: ${contact.id}</p>
         <p>Full Name: ${contact.fullName}</p>
-        <p>Company  : ${contact.company}</p>
-        <p>Email    : ${contact.email}</p>
-        <p>Phone    : ${contact.phone}</p>
+        <p>Company: ${contact.company}</p>
+        <p>Email: ${contact.email}</p>
+        <p>Phone: ${contact.phone}</p>
         <p>Birthdate: ${date}</p>
         <div>
           <button class="border rounded bg-red-500 text-xs text-white px-1 py-0.5">Delete</button>
@@ -63,8 +63,6 @@ function renderContacts(contacts) {
       `;
     })
     .join("");
-
-  console.log({ contactsListHtmlString });
 
   contactsListElement.innerHTML = contactsListHtmlString;
 }
