@@ -1,6 +1,7 @@
 let dataContacts = [
   {
     id: 1,
+    avatar: "https://i.pravatar.cc/150?img=1",
     fullName: "Alice Johnson",
     company: "Tech Solutions Inc.",
     email: "alice.johnson@techsolutions.com",
@@ -9,6 +10,7 @@ let dataContacts = [
   },
   {
     id: 2,
+    avatar: "https://i.pravatar.cc/150?img=2",
     fullName: "Bob Smith",
     company: "Creative Designs Ltd.",
     email: "bob.smith@creativedesigns.com",
@@ -17,6 +19,7 @@ let dataContacts = [
   },
   {
     id: 3,
+    avatar: "https://i.pravatar.cc/150?img=3",
     fullName: "Agus Dewantoro",
     company: null,
     email: null,
@@ -25,6 +28,7 @@ let dataContacts = [
   },
   {
     id: 4,
+    avatar: "https://i.pravatar.cc/150?img=4",
     fullName: "Diana Williams",
     company: "Marketing Experts",
     email: "diana.williams@marketingexperts.com",
@@ -33,6 +37,7 @@ let dataContacts = [
   },
   {
     id: 5,
+    avatar: "https://i.pravatar.cc/150?img=5",
     fullName: "Eve Davis",
     company: "Finance Solutions Group",
     email: "eve.davis@financesolutions.com",
@@ -42,29 +47,55 @@ let dataContacts = [
 ];
 
 function renderContacts(contacts) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("q");
+
+  const contactsToDisplay = searchQuery
+    ? searchContacts(loadContacts(), searchQuery)
+    : loadContacts();
+
+  console.log(contactsToDisplay);
+
   const contactsListElement = document.getElementById("contacts-list");
+  const contactsCountElement = document.getElementById("contacts-count");
 
-  const contactsListHtmlString = contacts
-    .map((contact) => {
-      const date = formatDateTime(contact.birthdate);
+  // Update the contacts count
+  contactsCountElement.textContent = `All Contacts - ${contacts.length} contacts`;
 
-      return `
-      <li class="pt-4">
-        <p>ID: ${contact.id}</p>
-        <p>Full Name: ${contact.fullName}</p>
-        <p>Company: ${contact.company}</p>
-        <p>Email: ${contact.email}</p>
-        <p>Phone: ${contact.phone}</p>
-        <p>Birthdate: ${date}</p>
+  const contactsListHTMLString = contactsToDisplay.map((contact) => {
+    const date = formatDateTime(contact.birthdate);
+
+    return `
+      <li
+        class="pt-4 flex items-center justify-between px-4 py-2 hover:bg-gray-50"
+      >
+        <img
+          src="${contact.avatar || "https://i.pravatar.cc/150?img=1"}"
+          alt="Avatar"
+          class="w-10 h-10 rounded-full"
+        />
+        <p>${contact.id}</p>
+        <p>${contact.fullName}</p>
+        <p>${contact.company}</p>
+        <p>${contact.email}</p>
+        <p>${contact.phone}</p>
+        <p>${date}</p>
         <div>
-          <button class="border rounded bg-red-500 text-xs text-white px-1 py-0.5">Delete</button>
+        <a href="/contacts/?id=${
+          contact.id
+        }" class="border rounded bg-blue-500 text-xs text-white px-1 py-0.5">View</a>
+          <button
+            class="border rounded bg-red-500 text-xs text-white px-1 py-0.5"
+            onclick="deleteContact(loadContacts(), ${contact.id})"
+          >
+            Delete
+          </button>
         </div>
       </li>
-      `;
-    })
-    .join("");
+    `;
+  });
 
-  contactsListElement.innerHTML = contactsListHtmlString;
+  contactsListElement.innerHTML = contactsListHTMLString.join("");
 }
 
 function searchContacts(contacts, searchTerm) {
@@ -82,16 +113,21 @@ function searchContacts(contacts, searchTerm) {
     return;
   }
 
-  renderContacts(searchedContacts);
+  return searchedContacts;
+  // renderContacts(searchedContacts);
 }
 
 function generateId(contacts) {
+  if (contacts.length === 0) {
+    return 1;
+  }
   return contacts[contacts.length - 1].id + 1;
 }
 
 function addContact(contacts, newContactInput) {
   const newContact = {
     id: generateId(contacts),
+    avatar: newContactInput.avatar,
     fullName: newContactInput.fullName,
     company: newContactInput.company,
     email: newContactInput.email,
@@ -193,7 +229,10 @@ function formatDateTime(date) {
  * Run Address Book functions
  */
 
-renderContacts(loadContacts());
+// renderContacts(loadContacts());
+window.addEventListener("load", function () {
+  renderContacts(loadContacts());
+});
 
 // searchContacts(loadContacts(), "ltd");
 

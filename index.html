@@ -3,27 +3,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Address Book</title>
-    <link rel="icon" href="../personal-website/images/favicon.ico" />
+
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <header class="mx-auto w-full max-w-xl mb-10">
-      <h1 class="text-3xl font-bold underline">Address Book</h1>
+  <body class="bg-gray-100">
+    <!-- <header class="mx-auto w-full max-w-xl mb-10"> -->
+    <header
+      class="bg-white mx-auto max-w-8xl p-4 flex item-center justify-between shadow-md"
+    >
+      <h1 class="text-2xl font-semibold">Address Book</h1>
+      <a
+        href="/new/index.html"
+        class="rounded-lg px-4 py-2 bg-blue-500 text-white"
+      >
+        Create Contact
+      </a>
     </header>
 
-    <main class="mx-auto w-full max-w-xl">
-      <h2>All Contacts</h2>
-      <p id="contacts-count">
-        <!-- ? contacts -->
-      </p>
+    <main class="container mx-auto mt-8">
+      <!-- Search Bar -->
+      <form method="get">
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex">
+          <input
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            type="search"
+            name="q"
+            placeholder="Search Contacts"
+          />
+          <button
+            class="border rounded bg-blue-500 text-xs text-white px-4 py-2"
+            type="submit"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+      <!-- Contacts List -->
+      <div class="bg-white rounded-lg shadow-sm">
+        <h2 id="contacts-count">All Contacts - 0 contacts</h2>
 
-      <hr />
-
-      <ul id="contacts-list" class="space-y-4 divide-y">
-        <!-- Render Contacts -->
-      </ul>
+        <hr />
+        <div class="flex justify-between">
+          <h2>Avatar</h2>
+          <h2>ID</h2>
+          <h2>Full Name</h2>
+          <h2>Company</h2>
+          <h2>Email</h2>
+          <h2>Telp</h2>
+          <h2>Birthdate</h2>
+          <h2>Action</h2>
+        </div>
+        <hr />
+        <ul class="divide-y" id="contacts-list" class="space-y-4 divide-y">
+          <!-- Render Contacts -->
+        </ul>
+      </div>
     </main>
 
-    <script src="index.js"></script>
+    <script src="/index.js"></script>
   </body>
 </html>

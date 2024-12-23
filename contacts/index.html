@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- Header -->
+    <header
+      class="bg-white shadow-md p-4 flex items-center justify-between fixed top-0 left-0 w-full z-10"
+    >
+      <div class="flex items-center space-x-4">
+        <a href="/index.html" class="text-blue-500"> </a>
+        <h1 class="text-xl font-semibold">Contact Details</h1>
+      </div>
+      <button
+        class="bg-blue-500 text-white rounded-md px-4 py-2 text-sm shadow-md"
+      >
+        Edit
+      </button>
+    </header>
+    <main class="pt-20 px-4">
+      <!-- Contact Card -->
+      <div
+        class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center space-y-4"
+      >
+        <img
+          src="https://i.pravatar.cc/150?img=1"
+          alt="Contact Avatar"
+          class="w-24 h-24 rounded-full shadow"
+        />
+        <h2 id="full-name" class="text-2xl font-semibold">Alice Johnson</h2>
+        <p id="company" class="text-gray-600">Tech Solutions Inc.</p>
+      </div>
+      <!-- Detail Contact -->
+      <div class="bg-white mt-6 rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4">Detail Information</h3>
+        <div class="space-y-2">
+          <div class="flex justify-start">
+            <span class="text-gray-600">Full Name</span>
+            <span id="full-name-detail" class="text-gray-800 ml-5"
+              >Alice Johnson</span
+            >
+          </div>
+          <div class="flex justify-start">
+            <span class="text-gray-600">Company</span>
+            <span id="company-detail" class="text-gray-800 ml-5"
+              >Tech Solutions Inc.</span
+            >
+          </div>
+          <div class="flex justify-start">
+            <span class="text-gray-600">Phone</span>
+            <span id="phone-detail" class="text-gray-800 ml-11"
+              >+62 123-456-7890</span
+            >
+          </div>
+          <div class="flex justify-start">
+            <span class="text-gray-600">Email</span>
+            <span id="email-detail" class="text-gray-800 ml-12"
+              >alice.johnson@techsolutions.com</span
+            >
+          </div>
+          <div class="flex justify-start">
+            <span class="text-gray-600">Birthdate</span>
+            <span id="birthdate-detail" class="text-gray-800 ml-5"
+              >15 March 1985</span
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

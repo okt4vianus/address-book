@@ -40,3 +40,10 @@ function formatDateTime(date) {
 }
 
 // getMerchandise();
+
+// getMerchandise().then(() => {
+// console.log("Done")});
+
+(async () => {
+  await getMerchandise();
+})();

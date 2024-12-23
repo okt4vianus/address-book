@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Contact</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <header
+      class="bg-white mx-auto max-w-8xl p-4 flex items-center justify-between shadow-md"
+    >
+      <h1 class="text-2xl font-semibold">Create New Contact</h1>
+      <a
+        href="index.html"
+        class="rounded-lg px-4 py-2 bg-gray-300 text-gray-800"
+      >
+        Back
+      </a>
+    </header>
+
+    <main class="container mx-auto mt-8">
+      <!-- New Contact Form -->
+      <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+        <form method="post" id="new-contact-form" class="space-y-4">
+          <input
+            type="text"
+            name="avatar"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="Avatar URL (e.g., https://i.pravatar.cc/150?img=1)"
+          />
+          <input
+            type="text"
+            name="full-name"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="Full Name"
+            required
+          />
+          <input
+            type="text"
+            name="company"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="Company"
+          />
+          <input
+            type="email"
+            name="email"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="Email"
+          />
+          <input
+            type="text"
+            name="phone"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="Phone"
+          />
+          <input
+            type="date"
+            name="birthdate"
+            class="w-full border border-gray-300 px-4 py-2 rounded-md"
+          />
+          <button
+            type="submit"
+            class="w-full rounded-lg px-4 py-2 bg-blue-500 text-white"
+          >
+            Add Contact
+          </button>
+        </form>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
