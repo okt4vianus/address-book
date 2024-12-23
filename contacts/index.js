@@ -1,33 +1,3 @@
-function loadContacts() {
-  const storageDataContacts = JSON.parse(
-    localStorage.getItem("storageDataContacts")
-  );
-
-  if (!storageDataContacts) {
-    saveContacts(dataContacts);
-    return dataContacts;
-  }
-
-  // Convert 'birthdate' strings back into Date objects
-  const parsedContacts = storageDataContacts.map((contact) => ({
-    ...contact,
-    birthdate: contact.birthdate ? new Date(contact.birthdate) : null,
-  }));
-
-  return parsedContacts;
-  // return storageDataContacts;
-}
-
-function formatDateTime(date) {
-  if (!date) return null;
-
-  return new Date(date).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
 const urlParams = new URLSearchParams(window.location.search);
 const paramsContactId = Number(urlParams.get("id"));
 

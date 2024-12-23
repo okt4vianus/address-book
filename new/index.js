@@ -1,32 +1,3 @@
-function saveContacts(data) {
-  localStorage.setItem("storageDataContacts", JSON.stringify(data));
-}
-
-function loadContacts() {
-  const storageDataContacts = JSON.parse(
-    localStorage.getItem("storageDataContacts")
-  );
-
-  if (!storageDataContacts) {
-    return [];
-  }
-
-  // Convert 'birthdate' strings back into Date objects
-  const parsedContacts = storageDataContacts.map((contact) => ({
-    ...contact,
-    birthdate: contact.birthdate ? new Date(contact.birthdate) : null,
-  }));
-
-  return parsedContacts;
-}
-
-function generateId(contacts) {
-  if (contacts.length === 0) {
-    return 1;
-  }
-  return contacts[contacts.length - 1].id + 1;
-}
-
 // Handle form submission
 const contactFormElement = document.getElementById("new-contact-form");
 
@@ -54,6 +25,6 @@ contactFormElement.addEventListener("submit", async (event) => {
   const updatedContacts = [...contacts, formData];
   saveContacts(updatedContacts);
 
-  // Redirect to the index.html page
+  // Redirect to home page
   window.location.href = "/";
 });
