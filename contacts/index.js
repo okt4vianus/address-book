@@ -39,6 +39,9 @@ console.log(searchedContacts[0].id);
 
 // Replace HTML values
 document.querySelector("img").src = searchedContacts[0].avatar;
+document.getElementById("id-detail").textContent = searchedContacts[0].id;
+document.getElementById("avatar-detail").textContent =
+  searchedContacts[0].avatar || null;
 document.getElementById("full-name").textContent = searchedContacts[0].fullName;
 document.getElementById("full-name-detail").textContent =
   searchedContacts[0].fullName;
