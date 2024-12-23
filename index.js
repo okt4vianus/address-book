@@ -76,7 +76,7 @@ function renderContacts(contacts) {
         />
         <p>${contact.id}</p>
         <p>${contact.fullName}</p>
-        <p>${contact.company}</p>
+        <p>${contact.company || "-"}</p>
         <p>${contact.email}</p>
         <p>${contact.phone}</p>
         <p>${date}</p>
@@ -142,20 +142,16 @@ function addContact(contacts, newContactInput) {
 }
 
 function deleteContact(contacts, contactId) {
-  const filteredContacts = contacts.filter((contact) => {
-    return contact.id === contactId;
-  });
-
-  const filterContacts = contacts.filter((contact) => {
-    return contact.id != contactId;
-  });
+  const filteredContacts = contacts.filter(
+    (contact) => contact.id !== contactId
+  );
 
   if (filteredContacts.length <= 0) {
     console.log(`There is no contact with the ID ${contactId} to delete`);
     return;
   }
 
-  dataContacts = filterContacts;
+  dataContacts = filteredContacts;
   saveContacts(dataContacts);
   renderContacts(dataContacts);
 }
@@ -229,24 +225,6 @@ function formatDateTime(date) {
  * Run Address Book functions
  */
 
-// renderContacts(loadContacts());
 window.addEventListener("load", function () {
   renderContacts(loadContacts());
 });
-
-// searchContacts(loadContacts(), "ltd");
-
-// addContact(loadContacts(), {
-//   fullName: "Frank Taylor",
-//   company: "Logistics Hub",
-//   email: "frank.taylor@logisticshub.com",
-//   phone: "+62 678-901-2345",
-//   birthdate: "1988-11-11",
-// });
-
-// deleteContact(loadContacts(), 4);
-
-// updateContact(loadContacts(), 5, {
-//   phone: "+62 987-654-3210",
-//   company: "Bank Indonesia",
-// });

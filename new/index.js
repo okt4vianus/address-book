@@ -55,5 +55,5 @@ contactFormElement.addEventListener("submit", async (event) => {
   saveContacts(updatedContacts);
 
   // Redirect to the index.html page
-  window.location.href = "../index.html";
+  window.location.href = "/";
 });

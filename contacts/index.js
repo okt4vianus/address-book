@@ -31,27 +31,59 @@ function formatDateTime(date) {
 const urlParams = new URLSearchParams(window.location.search);
 const paramsContactId = Number(urlParams.get("id"));
 
-const searchedContacts = loadContacts().filter(
+const searchedContact = loadContacts().find(
   (contact) => contact.id === paramsContactId
 );
 
-console.log(searchedContacts[0].id);
+const contactCardElement = document.getElementById("contact-card");
+
+contactCardElement.innerHTML = `
+  <img
+    src="${searchedContact.avatar}"
+    alt="Contact Avatar"
+    class="w-24 h-24 rounded-full shadow"
+  />
+  <h2 id="full-name" class="text-2xl font-semibold">${searchedContact.fullName}</h2>
+  <p id="company" class="text-gray-600">${searchedContact.company}</p>
+`;
 
 // Replace HTML values
-document.querySelector("img").src = searchedContacts[0].avatar;
-document.getElementById("id-detail").textContent = searchedContacts[0].id;
-document.getElementById("avatar-detail").textContent =
-  searchedContacts[0].avatar || null;
-document.getElementById("full-name").textContent = searchedContacts[0].fullName;
-document.getElementById("full-name-detail").textContent =
-  searchedContacts[0].fullName;
-document.getElementById("company").textContent =
-  searchedContacts[0].company || null;
-document.getElementById("company-detail").textContent =
-  searchedContacts[0].company || null;
-document.getElementById("phone-detail").textContent =
-  searchedContacts[0].phone || null;
-document.getElementById("email-detail").textContent =
-  searchedContacts[0].email || null;
-document.getElementById("birthdate-detail").textContent =
-  formatDateTime(searchedContacts[0].birthdate) || null;
+const contactDetailElement = document.getElementById("contact-detail");
+
+contactDetailElement.innerHTML = `
+  <img
+    src="${searchedContact.avatar}"
+    alt="Contact Avatar"
+    class="w-24 h-24 rounded-full shadow"
+  />
+  <div class="flex justify-start">
+    <span class="text-gray-600">ID</span>
+    <span class="text-gray-800 ml-20">${searchedContact.id}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Avatar</span>
+    <span class="text-gray-800 ml-12">${searchedContact.avatar || null}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Full Name</span>
+    <span class="text-gray-800 ml-5">${searchedContact.fullName}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Company</span>
+    <span class="text-gray-800 ml-5">${searchedContact.company || null}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Phone</span>
+    <span class="text-gray-800 ml-11">${searchedContact.phone || null}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Email</span>
+    <span class="text-gray-800 ml-12">${searchedContact.email || null}</span>
+  </div>
+  <div class="flex justify-start">
+    <span class="text-gray-600">Birthdate</span>
+    <span class="text-gray-800 ml-5"
+      >${formatDateTime(searchedContact.birthdate) || null}</span
+    >
+  </div>
+`;
