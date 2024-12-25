@@ -12,8 +12,11 @@
       class="bg-white mx-auto max-w-8xl p-4 flex item-center justify-between shadow-md"
     >
       <h1 class="text-2xl font-semibold">Address Book</h1>
-      <a href="/new" class="rounded-lg px-4 py-2 bg-blue-500 text-white">
-        Create New Contact
+      <a
+        href="/new/index.html"
+        class="rounded-lg px-4 py-2 bg-blue-500 text-white"
+      >
+        Create Contact
       </a>
     </header>
 
@@ -40,14 +43,14 @@
         <h2 id="contacts-count">All Contacts - 0 contacts</h2>
 
         <hr />
-        <div class="flex justify-between">
-          <h2>Avatar</h2>
-          <h2>ID</h2>
-          <h2>Full Name</h2>
-          <h2>Company</h2>
-          <h2>Email</h2>
-          <h2>Telp</h2>
-          <h2>Birthdate</h2>
+        <div class="flex items-center bg-gray-100 font-semibold text-gray-700">
+          <h2 class="ml-3 w-20">Avatar</h2>
+          <h2 class="w-10">ID</h2>
+          <h2 class="w-36">Full Name</h2>
+          <h2 class="w-52">Company</h2>
+          <h2 class="w-80">Email</h2>
+          <h2 class="w-44">Telp</h2>
+          <h2 class="w-44">Birthdate</h2>
           <h2>Action</h2>
         </div>
         <hr />
@@ -57,7 +60,6 @@
       </div>
     </main>
 
-    <script src="/utils.js"></script>
     <script src="/index.js"></script>
   </body>
 </html>

@@ -67,19 +67,19 @@ function renderContacts(contacts) {
 
     return `
       <li
-        class="pt-4 flex items-center justify-between px-4 py-2 hover:bg-gray-50"
+        class="pt-4 flex items-center px-4 py-2 hover:bg-gray-50"
       >
-        <img
+        <img 
           src="${contact.avatar || "https://i.pravatar.cc/150?img=1"}"
           alt="Avatar"
           class="w-10 h-10 rounded-full"
         />
-        <p>${contact.id}</p>
-        <p>${contact.fullName}</p>
-        <p>${contact.company || "-"}</p>
-        <p>${contact.email}</p>
-        <p>${contact.phone}</p>
-        <p>${date}</p>
+        <p class="ml-9 w-10">${contact.id}</p>
+        <p class="w-36">${contact.fullName}</p>
+        <p class="w-52">${contact.company}</p>
+        <p class="w-80">${contact.email}</p>
+        <p class="w-44">${contact.phone}</p>
+        <p class="w-44">${date}</p>
         <div>
         <a href="/contacts/?id=${
           contact.id
@@ -117,6 +117,13 @@ function searchContacts(contacts, searchTerm) {
   // renderContacts(searchedContacts);
 }
 
+function generateId(contacts) {
+  if (contacts.length === 0) {
+    return 1;
+  }
+  return contacts[contacts.length - 1].id + 1;
+}
+
 function addContact(contacts, newContactInput) {
   const newContact = {
     id: generateId(contacts),
@@ -135,16 +142,20 @@ function addContact(contacts, newContactInput) {
 }
 
 function deleteContact(contacts, contactId) {
-  const filteredContacts = contacts.filter(
-    (contact) => contact.id !== contactId
-  );
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.id === contactId;
+  });
+
+  const filterContacts = contacts.filter((contact) => {
+    return contact.id != contactId;
+  });
 
   if (filteredContacts.length <= 0) {
     console.log(`There is no contact with the ID ${contactId} to delete`);
     return;
   }
 
-  dataContacts = filteredContacts;
+  dataContacts = filterContacts;
   saveContacts(dataContacts);
   renderContacts(dataContacts);
 }
@@ -180,10 +191,62 @@ function updateContact(contacts, contactId, updateContactInput) {
   renderContacts(dataContacts);
 }
 
+function saveContacts(data) {
+  localStorage.setItem("storageDataContacts", JSON.stringify(data));
+}
+
+function loadContacts() {
+  const storageDataContacts = JSON.parse(
+    localStorage.getItem("storageDataContacts")
+  );
+
+  if (!storageDataContacts) {
+    saveContacts(dataContacts);
+    return dataContacts;
+  }
+
+  // Convert 'birthdate' strings back into Date objects
+  const parsedContacts = storageDataContacts.map((contact) => ({
+    ...contact,
+    birthdate: contact.birthdate ? new Date(contact.birthdate) : null,
+  }));
+
+  return parsedContacts;
+  // return storageDataContacts;
+}
+
+function formatDateTime(date) {
+  if (!date) return null;
+
+  return new Date(date).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 /**
  * Run Address Book functions
  */
 
+// renderContacts(loadContacts());
 window.addEventListener("load", function () {
   renderContacts(loadContacts());
 });
+
+// searchContacts(loadContacts(), "ltd");
+
+// addContact(loadContacts(), {
+//   fullName: "Frank Taylor",
+//   company: "Logistics Hub",
+//   email: "frank.taylor@logisticshub.com",
+//   phone: "+62 678-901-2345",
+//   birthdate: "1988-11-11",
+// });
+
+// deleteContact(loadContacts(), 4);
+
+// updateContact(loadContacts(), 5, {
+//   phone: "+62 987-654-3210",
+//   company: "Bank Indonesia",
+// });
